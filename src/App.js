@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import CityInput from "./components/CityInput";
-// import ZipCards from "./components/ZipCards";
+import ZipCard from "./components/ZipCard";
 import Axios from "axios";
 
 class App extends Component {
@@ -10,7 +10,8 @@ class App extends Component {
 
     this.state = {
       zips: null,
-      city: "SACRAMENTO",
+      city: null,
+      view: "all",
     };
   }
 
@@ -23,6 +24,12 @@ class App extends Component {
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
+    });
+  };
+
+  handleSelect = (e) => {
+    this.setState({
+      view: e.target.value,
     });
   };
 
@@ -46,18 +53,21 @@ class App extends Component {
   };
 
   render() {
-    console.log("city", this.state.city);
-    console.log("zips", this.state.zips);
+    const { zips, city, view } = this.state;
+    console.log("city", city);
+    console.log("zips", zips);
+    console.log("view", view);
 
     return (
       <React.Fragment>
-        <Navbar
-          title="CitySearch"
-          zips={this.state.zips}
-          city={this.state.city}
+        <Navbar title="CitySearch" zips={zips} city={city} />
+        <CityInput
+          onChange={this.handleChange}
+          onSubmit={this.onSubmitCity}
+          view={view}
+          onSelect={this.handleSelect}
         />
-        <CityInput onChange={this.handleChange} onSubmit={this.onSubmitCity} />
-        {/* <ZipCards zips={this.state.zips} /> */}
+        <ZipCard zips={this.state.zips} view={view} />
       </React.Fragment>
     );
   }

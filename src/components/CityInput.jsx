@@ -1,6 +1,7 @@
 import React from "react";
+import SortOptions from "./SortOptions";
 
-const CityInput = ({ onChange, onSubmit }) => {
+const CityInput = ({ onChange, onSubmit, view, onSelect }) => {
   return (
     <div className="input-form" style={{ marginLeft: "38%", marginTop: "2vh" }}>
       <label style={{ marginRight: 5 }}>City Name</label>
@@ -19,6 +20,7 @@ const CityInput = ({ onChange, onSubmit }) => {
       >
         Search
       </button>
+      <SortOptions view={view} onSelect={onSelect} />
     </div>
   );
 };
