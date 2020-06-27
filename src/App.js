@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import CityInput from "./components/CityInput";
 import ZipCard from "./components/ZipCard";
 import Axios from "axios";
+import StatesCity from "./components/StatesCity";
+import { statesWithCity } from "./services";
 
 class App extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class App extends Component {
     this.state = {
       zips: null,
       city: null,
+      states: null,
       view: "all",
     };
   }
@@ -34,7 +37,10 @@ class App extends Component {
   };
 
   onSubmitCity = async (e) => {
-    return this.fetchZips(this.state.city.toUpperCase());
+    this.setState({
+      view: "all",
+    });
+    if (this.state.city) return this.fetchZips(this.state.city.toUpperCase());
   };
 
   fetchZips = (city) => {
@@ -43,20 +49,19 @@ class App extends Component {
         if (res.data)
           this.setState({
             zips: res.data,
+            states: statesWithCity(res.data),
           });
       })
       .catch((error) => {
         this.setState({
-          zips: "no results",
+          zips: ["NO RESULT"],
+          states: ["NO RESULT"],
         });
       });
   };
 
   render() {
-    const { zips, city, view } = this.state;
-    console.log("city", city);
-    console.log("zips", zips);
-    console.log("view", view);
+    const { zips, city, view, states } = this.state;
 
     return (
       <React.Fragment>
@@ -68,6 +73,7 @@ class App extends Component {
           onSelect={this.handleSelect}
         />
         <ZipCard zips={this.state.zips} view={view} />
+        <StatesCity states={states} view={view} city={city} />
       </React.Fragment>
     );
   }
