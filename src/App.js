@@ -4,7 +4,8 @@ import CityInput from "./components/CityInput";
 import ZipCard from "./components/ZipCard";
 import Axios from "axios";
 import StatesCity from "./components/StatesCity";
-import { statesWithCity } from "./services";
+import { statesWithCity, cityDetails } from "./services";
+import CityDetails from "./components/CityDetail";
 
 class App extends Component {
   constructor(props) {
@@ -12,8 +13,9 @@ class App extends Component {
 
     this.state = {
       zips: null,
-      city: null,
+      city: "sacramento",
       states: null,
+      cities: null,
       view: "all",
     };
   }
@@ -50,6 +52,7 @@ class App extends Component {
           this.setState({
             zips: res.data,
             states: statesWithCity(res.data),
+            cities: cityDetails(res.data),
           });
       })
       .catch((error) => {
@@ -61,7 +64,9 @@ class App extends Component {
   };
 
   render() {
-    const { zips, city, view, states } = this.state;
+    const { zips, city, view, states, cities } = this.state;
+
+    console.log("view", view);
 
     return (
       <React.Fragment>
@@ -74,6 +79,7 @@ class App extends Component {
         />
         <ZipCard zips={this.state.zips} view={view} />
         <StatesCity states={states} view={view} city={city} />
+        <CityDetails cities={cities} view={view} />
       </React.Fragment>
     );
   }
