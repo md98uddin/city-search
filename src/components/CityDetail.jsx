@@ -3,7 +3,10 @@ import React from "react";
 const CityDetails = ({ cities, view }) => {
   return (
     view === "details" && (
-      <div className="container" style={{ textAlign: "center" }}>
+      <div
+        className="container"
+        style={{ textAlign: "center", height: "500px", overflowY: "scroll" }}
+      >
         <p style={{ marginLeft: "120px" }}>
           Zip Details Order | City, Geolocation, Population, Total Wages{" "}
         </p>

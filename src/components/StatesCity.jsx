@@ -1,7 +1,6 @@
 import React from "react";
 
 const StatesCity = ({ states, view, city }) => {
-  console.log("states", states);
   return view === "states" ? (
     <div className="container card" style={{ textAlign: "center" }}>
       <div className="card-body">
